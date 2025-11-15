@@ -1,0 +1,428 @@
+/* 전역 스타일 */
+:root {
+    --primary-color: #198754;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --light-bg: #f8f9fa;
+    --border-color: #dee2e6;
+    --hover-bg: #e9ecef;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.row {
+    margin: 0;
+}
+
+/* Sidebar 스타일 */
+.sidebar {
+    height: 100vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-header {
+    border-bottom: 2px solid var(--border-color);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.sidebar-header h4 {
+    font-weight: 700;
+    color: #212529;
+}
+
+/* 멤버 카드 */
+.member-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.member-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--primary-color);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.member-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.15);
+    border-color: var(--primary-color);
+}
+
+.member-card:hover::before {
+    transform: scaleY(1);
+}
+
+.member-card.active {
+    background: linear-gradient(135deg, #d1f4e0 0%, #e8f8f0 100%);
+    border-color: var(--primary-color);
+    border-width: 2px;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
+}
+
+.member-card.active::before {
+    transform: scaleY(1);
+}
+
+.member-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #20c997);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.member-info {
+    flex: 1;
+}
+
+.member-name {
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 4px;
+}
+
+.member-stats {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+}
+
+/* Main Content */
+.main-content {
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+.content-header {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.content-header h2 {
+    font-weight: 700;
+    color: #212529;
+}
+
+/* Tab 스타일 */
+.nav-tabs {
+    border-bottom: 2px solid var(--border-color);
+}
+
+.nav-tabs .nav-link {
+    color: var(--secondary-color);
+    border: none;
+    padding: 12px 24px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-tabs .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--primary-color);
+    background-color: rgba(25, 135, 84, 0.05);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    background-color: transparent;
+    font-weight: 600;
+}
+
+.nav-tabs .nav-link.active::after {
+    transform: scaleX(1);
+}
+
+/* Submission Card */
+.submission-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.submission-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.submission-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.submission-author {
+    display: flex;
+    align-items: center;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #20c997);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 12px;
+}
+
+.author-info h6 {
+    margin-bottom: 2px;
+    font-weight: 600;
+    color: #212529;
+}
+
+.submission-date {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+}
+
+.submission-date i {
+    margin-right: 4px;
+}
+
+.submission-content {
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.submission-content.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.submission-content.expanded {
+    white-space: pre-wrap;
+}
+
+.expand-btn {
+    font-size: 0.9rem;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.expand-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Penalty Table */
+.penalty-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.penalty-table table {
+    margin-bottom: 0;
+}
+
+.penalty-table thead {
+    background: linear-gradient(135deg, var(--primary-color), #20c997);
+    color: white;
+}
+
+.penalty-table thead th {
+    font-weight: 600;
+    border: none;
+    padding: 16px;
+}
+
+.penalty-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.penalty-table tbody tr:hover {
+    background-color: rgba(25, 135, 84, 0.05);
+}
+
+.penalty-table tbody td {
+    padding: 16px;
+    vertical-align: middle;
+}
+
+.penalty-badge {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* Empty State */
+.empty-state {
+    padding: 60px 20px;
+}
+
+.empty-state i {
+    opacity: 0.3;
+}
+
+/* Search Input */
+#memberSearch {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#memberSearch:focus {
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+    border-color: var(--primary-color);
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* Refresh Button */
+#refreshBtn {
+    transition: all 0.3s ease;
+}
+
+#refreshBtn:hover {
+    transform: rotate(180deg);
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar,
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.main-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.main-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .main-content {
+        height: auto;
+    }
+
+    .member-card {
+        padding: 12px;
+    }
+
+    .member-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .submission-card {
+        padding: 15px;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.submission-card,
+.member-card {
+    animation: fadeIn 0.4s ease;
+}
+
+/* Toast 스타일 개선 */
+.toast {
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.toast-header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
