@@ -42,6 +42,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="px-3 mt-3 pb-3">
+                    <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+                        <i class="bi bi-person-plus"></i> 멤버 추가
+                    </button>
+                </div>
             </div>
 
             <!-- Main Content -->
@@ -53,6 +59,9 @@
                             <p class="text-muted small mb-0" id="contentSubtitle">왼쪽 사이드바에서 멤버를 선택하세요</p>
                         </div>
                         <div>
+                            <button class="btn btn-success btn-sm me-2" id="addSubmissionBtn" data-bs-toggle="modal" data-bs-target="#addSubmissionModal" style="display: none;">
+                                <i class="bi bi-plus-circle"></i> 제출 기록 작성
+                            </button>
                             <button class="btn btn-outline-secondary btn-sm" id="refreshBtn">
                                 <i class="bi bi-arrow-clockwise"></i> 새로고침
                             </button>
@@ -103,6 +112,64 @@
         </div>
     </div>
 
+    <!-- Add Member Modal -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMemberModalLabel">
+                        <i class="bi bi-person-plus text-success"></i> 새 멤버 추가
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addMemberForm">
+                        <div class="mb-3">
+                            <label for="memberName" class="form-label">이름 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="memberName" required placeholder="멤버 이름을 입력하세요">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-success" id="submitAddMember">
+                        <i class="bi bi-check-circle"></i> 추가하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Submission Modal -->
+    <div class="modal fade" id="addSubmissionModal" tabindex="-1" aria-labelledby="addSubmissionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSubmissionModalLabel">
+                        <i class="bi bi-file-text text-success"></i> 제출 기록 작성
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSubmissionForm">
+                        <div class="mb-3">
+                            <label for="submissionContent" class="form-label">내용 <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="submissionContent" rows="10" required
+                                placeholder="오늘 풀었던 문제의 링크, 회고, 배운 점 등을 자유롭게 작성해주세요..."></textarea>
+                            <div class="form-text">마크다운 형식을 지원합니다.</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-success" id="submitAddSubmission">
+                        <i class="bi bi-check-circle"></i> 제출하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Container -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -113,6 +180,16 @@
             </div>
             <div class="toast-body" id="errorToastBody">
                 오류가 발생했습니다.
+            </div>
+        </div>
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+                <i class="bi bi-check-circle me-2"></i>
+                <strong class="me-auto">성공</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="successToastBody">
+                성공적으로 처리되었습니다.
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@ public class StudyMemberController {
     private final StudyMemberService studyMemberService;
 
     @PostMapping("/study-groups/{id}/study-members")
-    public void createStudyMembers(@RequestParam StudyMemberCreateReqDto studyMemberCreateReqDto){
+    public void createStudyMembers(@RequestBody StudyMemberCreateReqDto studyMemberCreateReqDto){
         studyMemberService.createStudyMember(studyMemberCreateReqDto);
     }
 

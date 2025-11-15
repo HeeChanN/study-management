@@ -4,7 +4,10 @@ const state = {
     selectedMemberId: null,
     studyMembers: [],
     penalties: [],
-    errorToast: null
+    errorToast: null,
+    successToast: null,
+    addMemberModal: null,
+    addSubmissionModal: null
 };
 
 // API Base URL
@@ -17,10 +20,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadStudyGroup();
 });
 
-// Error Toast 초기화
+// Toast 초기화
 function initErrorToast() {
-    const toastElement = document.getElementById('errorToast');
-    state.errorToast = new bootstrap.Toast(toastElement);
+    const errorToastElement = document.getElementById('errorToast');
+    state.errorToast = new bootstrap.Toast(errorToastElement);
+
+    const successToastElement = document.getElementById('successToast');
+    state.successToast = new bootstrap.Toast(successToastElement);
+
+    // 모달 초기화
+    const addMemberModalElement = document.getElementById('addMemberModal');
+    state.addMemberModal = new bootstrap.Modal(addMemberModalElement);
+
+    const addSubmissionModalElement = document.getElementById('addSubmissionModal');
+    state.addSubmissionModal = new bootstrap.Modal(addSubmissionModalElement);
 }
 
 // 이벤트 리스너 초기화
@@ -42,6 +55,20 @@ function initEventListeners() {
     // 벌금 탭 클릭 시 데이터 로드
     document.getElementById('penalties-tab').addEventListener('click', () => {
         loadPenalties();
+    });
+
+    // 멤버 추가 버튼
+    document.getElementById('submitAddMember').addEventListener('click', addMember);
+
+    // 제출 기록 추가 버튼
+    document.getElementById('submitAddSubmission').addEventListener('click', addSubmission);
+
+    // 엔터키로 폼 제출
+    document.getElementById('memberName').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addMember();
+        }
     });
 }
 
@@ -134,6 +161,9 @@ async function selectMember(memberId, memberName) {
     // UI 업데이트
     document.getElementById('selectedMemberName').textContent = memberName;
     document.getElementById('contentSubtitle').textContent = `${memberName}님의 활동 내역`;
+
+    // 제출 기록 작성 버튼 표시
+    document.getElementById('addSubmissionBtn').style.display = 'inline-block';
 
     // 멤버 카드 활성화 상태 업데이트
     document.querySelectorAll('.member-card').forEach(card => {
@@ -406,4 +436,102 @@ function unescapeHtml(text) {
 function showError(message) {
     document.getElementById('errorToastBody').textContent = message;
     state.errorToast.show();
+}
+
+// 성공 토스트 표시
+function showSuccess(message) {
+    document.getElementById('successToastBody').textContent = message;
+    state.successToast.show();
+}
+
+// 멤버 추가
+async function addMember() {
+    const memberName = document.getElementById('memberName').value.trim();
+
+    if (!memberName) {
+        showError('이름을 입력해주세요.');
+        return;
+    }
+
+    if (!state.studyGroupId) {
+        showError('스터디 그룹을 찾을 수 없습니다.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/study-groups/${state.studyGroupId}/study-members`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: memberName,
+                studyGroupId: state.studyGroupId
+            })
+        });
+
+        if (!response.ok) throw new Error('멤버 추가에 실패했습니다.');
+
+        // 모달 닫기
+        state.addMemberModal.hide();
+
+        // 폼 초기화
+        document.getElementById('memberName').value = '';
+
+        // 성공 메시지 표시
+        showSuccess(`${memberName}님이 추가되었습니다.`);
+
+        // 멤버 목록 새로고침
+        await loadStudyMembers(state.studyGroupId);
+
+    } catch (error) {
+        console.error('Error adding member:', error);
+        showError(error.message);
+    }
+}
+
+// 제출 기록 추가
+async function addSubmission() {
+    const content = document.getElementById('submissionContent').value.trim();
+
+    if (!content) {
+        showError('내용을 입력해주세요.');
+        return;
+    }
+
+    if (!state.selectedMemberId) {
+        showError('멤버를 선택해주세요.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/daily-submissions`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                studyMemberId: state.selectedMemberId,
+                content: content
+            })
+        });
+
+        if (!response.ok) throw new Error('제출 기록 작성에 실패했습니다.');
+
+        // 모달 닫기
+        state.addSubmissionModal.hide();
+
+        // 폼 초기화
+        document.getElementById('submissionContent').value = '';
+
+        // 성공 메시지 표시
+        showSuccess('제출 기록이 작성되었습니다.');
+
+        // 제출 기록 새로고침
+        await loadMemberSubmissions(state.selectedMemberId);
+
+    } catch (error) {
+        console.error('Error adding submission:', error);
+        showError(error.message);
+    }
 }
