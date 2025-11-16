@@ -31,12 +31,10 @@ public class StudyMember {
         this.studyGroup = studyGroup;
     }
 
-    public int calculateTotalPenaltyDay(List<LocalDate> weekdays) {
-        long missedDays = weekdays.stream()
+    public List<LocalDate> checkPenaltyDay(List<LocalDate> weekdays) {
+        return weekdays.stream()
                 .filter(date -> dailySubmissions.stream()
                         .noneMatch(sub -> sub.getSubmissionAt().toLocalDate().equals(date)))
-                .count();
-
-        return (int) missedDays;
+                .toList();
     }
 }

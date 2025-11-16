@@ -2,6 +2,7 @@ package com.example.study_management.service;
 
 import com.example.study_management.domain.Penalty;
 import com.example.study_management.domain.StudyMember;
+import com.example.study_management.global.Constants;
 import com.example.study_management.infrastructure.external.DiscordWebhookService;
 import com.example.study_management.infrastructure.external.DiscordMessageReqDto;
 import com.example.study_management.infrastructure.persistence.DailySubmissionRepository;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import static com.example.study_management.global.Constants.PENALTY_AMOUNT_PER_DAY;
 import static com.example.study_management.global.Constants.SESAC_GROUP_ID;
 
 @Service
@@ -61,12 +63,12 @@ public class PenaltyService {
         List<DiscordMessageReqDto> discordMessageReqDtos = allMembers.stream().map(
                 studyMember -> {
                     return DiscordMessageReqDto.from(
-                            studyMember.getName(),studyMember.calculateTotalPenaltyDay(checkDates));
+                            studyMember.getName(),studyMember.checkPenaltyDay(checkDates));
         }).toList();
 
         int totalAmount = discordMessageReqDtos.stream()
-                .mapToInt(DiscordMessageReqDto::getFine)
-                .sum();
+                .mapToInt(dto -> dto.getPenaltyDays().size())
+                .sum() * PENALTY_AMOUNT_PER_DAY;
 
         Penalty penalty = new Penalty(makeTitle(checkDates,monday),totalAmount,allMembers.get(0).getStudyGroup());
         penaltyRepository.save(penalty);

@@ -3,18 +3,21 @@ package com.example.study_management.infrastructure.external;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class DiscordMessageReqDto {
     private String memberName;
-    private int fine;
+    private List<LocalDate> penaltyDays;
 
-    private DiscordMessageReqDto(String memberName, int fine) {
+    public DiscordMessageReqDto(String memberName, List<LocalDate> penaltyDays) {
         this.memberName = memberName;
-        this.fine = fine;
+        this.penaltyDays = penaltyDays;
     }
 
-    public static DiscordMessageReqDto from(String memberName, int fine){
-        return new DiscordMessageReqDto(memberName, fine);
+    public static DiscordMessageReqDto from(String memberName, List<LocalDate> penaltyDays){
+        return new DiscordMessageReqDto(memberName, penaltyDays);
     }
 }
