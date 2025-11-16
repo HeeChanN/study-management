@@ -52,44 +52,44 @@
 
             <!-- Main Content -->
             <div class="col-md-9 main-content">
-                <div class="content-header p-4 bg-white border-bottom">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h2 class="mb-0" id="selectedMemberName">멤버를 선택해주세요</h2>
-                            <p class="text-muted small mb-0" id="contentSubtitle">왼쪽 사이드바에서 멤버를 선택하세요</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-success btn-sm me-2" id="addSubmissionBtn" data-bs-toggle="modal" data-bs-target="#addSubmissionModal" style="display: none;">
-                                <i class="bi bi-plus-circle"></i> 제출 기록 작성
-                            </button>
-                            <button class="btn btn-outline-secondary btn-sm" id="refreshBtn">
-                                <i class="bi bi-arrow-clockwise"></i> 새로고침
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab Navigation -->
-                <ul class="nav nav-tabs px-4 pt-3 bg-white" id="contentTabs" role="tablist">
+                <!-- Tab Navigation (메인 레벨) -->
+                <ul class="nav nav-tabs px-4 pt-3 bg-white border-bottom" id="mainTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="submissions-tab" data-bs-toggle="tab"
-                                data-bs-target="#submissions" type="button" role="tab">
-                            <i class="bi bi-file-text"></i> 제출 기록
+                        <button class="nav-link active" id="members-tab" data-bs-toggle="tab"
+                                data-bs-target="#members-section" type="button" role="tab">
+                            <i class="bi bi-people"></i> 멤버별 제출 기록
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="penalties-tab" data-bs-toggle="tab"
-                                data-bs-target="#penalties" type="button" role="tab">
+                                data-bs-target="#penalties-section" type="button" role="tab">
                             <i class="bi bi-exclamation-triangle"></i> 벌금 내역
                         </button>
                     </li>
                 </ul>
 
-                <!-- Tab Content -->
-                <div class="tab-content p-4" id="contentTabContent">
-                    <!-- Submissions Tab -->
-                    <div class="tab-pane fade show active" id="submissions" role="tabpanel">
-                        <div id="submissionsContent">
+                <!-- Tab Content (메인 레벨) -->
+                <div class="tab-content" id="mainTabContent">
+                    <!-- Members Section -->
+                    <div class="tab-pane fade show active" id="members-section" role="tabpanel">
+                        <div class="content-header p-4 bg-white border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h2 class="mb-0" id="selectedMemberName">멤버를 선택해주세요</h2>
+                                    <p class="text-muted small mb-0" id="contentSubtitle">왼쪽 사이드바에서 멤버를 선택하세요</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-success btn-sm me-2" id="addSubmissionBtn" data-bs-toggle="modal" data-bs-target="#addSubmissionModal" style="display: none;">
+                                        <i class="bi bi-plus-circle"></i> 제출 기록 작성
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm" id="refreshBtn">
+                                        <i class="bi bi-arrow-clockwise"></i> 새로고침
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4" id="submissionsContent">
                             <div class="empty-state text-center py-5">
                                 <i class="bi bi-inbox display-1 text-muted"></i>
                                 <p class="text-muted mt-3">멤버를 선택하면 제출 기록이 표시됩니다</p>
@@ -97,9 +97,23 @@
                         </div>
                     </div>
 
-                    <!-- Penalties Tab -->
-                    <div class="tab-pane fade" id="penalties" role="tabpanel">
-                        <div id="penaltiesContent">
+                    <!-- Penalties Section -->
+                    <div class="tab-pane fade" id="penalties-section" role="tabpanel">
+                        <div class="content-header p-4 bg-white border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h2 class="mb-0">전체 벌금 내역</h2>
+                                    <p class="text-muted small mb-0">스터디 그룹의 전체 벌금 내역입니다</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-secondary btn-sm" id="refreshPenaltiesBtn">
+                                        <i class="bi bi-arrow-clockwise"></i> 새로고침
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4" id="penaltiesContent">
                             <div class="text-center py-5">
                                 <div class="spinner-border text-success" role="status">
                                     <span class="visually-hidden">Loading...</span>

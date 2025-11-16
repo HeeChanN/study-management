@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initErrorToast();
     initEventListeners();
     await loadStudyGroup();
+    await loadPenalties();
 });
 
 // Toast 초기화
@@ -54,6 +55,11 @@ function initEventListeners() {
 
     // 벌금 탭 클릭 시 데이터 로드
     document.getElementById('penalties-tab').addEventListener('click', () => {
+        loadPenalties();
+    });
+
+    // 벌금 새로고침 버튼
+    document.getElementById('refreshPenaltiesBtn').addEventListener('click', () => {
         loadPenalties();
     });
 
