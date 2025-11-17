@@ -63,6 +63,9 @@ function initEventListeners() {
         loadPenalties();
     });
 
+    // 벌금 계산 버튼 (시연용)
+    document.getElementById('calculatePenaltiesBtn').addEventListener('click', calculatePenalties);
+
     // 멤버 추가 버튼
     document.getElementById('submitAddMember').addEventListener('click', addMember);
 
@@ -278,6 +281,37 @@ function toggleContent(submissionId, fullContent) {
         const preview = unescapeHtml(fullContent).substring(0, 150) + '...';
         contentElement.textContent = preview;
         button.innerHTML = '<i class="bi bi-chevron-down"></i> 더보기';
+    }
+}
+
+// 벌금 계산 (시연용)
+async function calculatePenalties() {
+    try {
+        // 버튼 비활성화
+        const button = document.getElementById('calculatePenaltiesBtn');
+        button.disabled = true;
+        button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> 계산 중...';
+
+        const response = await fetch(`${API_BASE_URL}/penalties`, {
+            method: 'POST'
+        });
+
+        if (!response.ok) throw new Error('벌금 계산에 실패했습니다.');
+
+        // 성공 메시지 표시
+        showSuccess('지난 주 코테 벌금이 계산되었습니다.');
+
+        // 벌금 내역 새로고침
+        await loadPenalties();
+
+    } catch (error) {
+        console.error('Error calculating penalties:', error);
+        showError(error.message);
+    } finally {
+        // 버튼 다시 활성화
+        const button = document.getElementById('calculatePenaltiesBtn');
+        button.disabled = false;
+        button.innerHTML = '<i class="bi bi-calculator"></i> 벌금 계산 (시연용)';
     }
 }
 
